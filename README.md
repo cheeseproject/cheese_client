@@ -1,16 +1,36 @@
-# flutter-demo
+# Cheese
 
 A new Flutter project.
 
-## Getting Started
+## 環境構築
 
-This project is a starting point for a Flutter application.
+以下の記事を参考にして環境構築を行う。
 
-A few resources to get you started if this is your first Flutter project:
+https://zenn.dev/kazutxt/books/flutter_practice_introduction/viewer/06_chapter1_environment
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 起動
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+パッケージのインストール
+```
+flutter pub get
+```
+
+ビルド
+
+```
+flutter run
+```
+ただし、ホットリロードできないので、vscodeから実行することをお薦めるする。
+詳しくは以下を参考
+https://zenn.dev/kazutxt/books/flutter_practice_introduction/viewer/07_chapter1_helloworld
+
+## クラス作成
+
+`freezed` はFlutterアプリケーションでイミュータブルなデータクラスを簡単に生成するためのパッケージ
+
+以下のコマンドで生成できる.
+
+
+```
+flutter pub run build_runner build
+```
