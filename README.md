@@ -59,6 +59,7 @@ flutter pub run build_runner build
 ## 設計方針
 ### 依存ルール
 pages -> hooks.domain -> repository
+ビジネスロジックが大きくなった場合、pagesに専用のhooksを定義する
 
 
 ### API通信
