@@ -49,7 +49,7 @@ flutter pub run build_runner build
 | repositories      | データアクセス      |
 | entities      | アプリで扱うクラス      |
 | hooks.domain   | reppsitoriesの関数を呼び出すラッパー。　useQueryかuseMutationから呼び出す |
-| hooks.hooks   | 汎用hooks      |
+| hooks.helper   | 汎用hooks      |
 | pages   |ページ     |
 | conponents.ui   | 汎用的なコンポーネント      |
 | utils  | 汎用関数やクラス      |
