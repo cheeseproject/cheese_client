@@ -3,6 +3,7 @@ import 'package:cheese_client/src/components/ui/common/page_error.dart';
 import 'package:cheese_client/src/components/ui/common/page_loading.dart';
 import 'package:cheese_client/src/hooks/domain/snap_post/use_fetch_snap_post.dart';
 import 'package:cheese_client/src/components/ui/snap_post_detail_card.dart';
+import 'package:cheese_client/src/components/ui/common/snap_post_detail_page_loading.dart';
 import 'package:cheese_client/src/repositories/snap_post/params/snap_post_params.dart';
 import 'package:cheese_client/src/styles/custom_color.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,9 @@ class SnapPostDetailPage extends HookConsumerWidget {
     }
 
     if (snapshot.hasError) return const PageError();
-    if (snapshot.isLoading || snapPost == null) return const PageLoading();
+    if (snapshot.isLoading || snapPost == null) {
+      return const SnapPostDetailPageLoading();
+    }
 
     return Scaffold(
       backgroundColor: CheeseColor.bgColor,
@@ -39,7 +42,7 @@ class SnapPostDetailPage extends HookConsumerWidget {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         child: SnapPostDetailCard(
           title: snapPost.title,
           comment: snapPost.comment,

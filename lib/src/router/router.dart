@@ -6,7 +6,7 @@ import 'package:cheese_client/src/pages/profile_snap_post_detail/prolie_snap_pos
 import 'package:cheese_client/src/pages/route/route_page.dart';
 import 'package:cheese_client/src/pages/sign_in/sign_in_page.dart';
 import 'package:cheese_client/src/pages/sing_up/sing_up_page.dart';
-import 'package:cheese_client/src/pages/snap_post_detail/prolie_snap_post_detail_page.dart';
+import 'package:cheese_client/src/pages/snap_post_detail/snap_post_detail_page.dart';
 import 'package:cheese_client/src/pages/snap_post_submit/snap_post_submit_page.dart';
 import 'package:cheese_client/src/pages/snap_route_detail/snap_route_detail_page.dart';
 import 'package:cheese_client/src/pages/snap_route_submit/snap_route_submit.page.dart';

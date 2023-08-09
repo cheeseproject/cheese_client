@@ -5,6 +5,7 @@ import 'package:cheese_client/src/entities/snap_post/tag_options.dart';
 import 'package:cheese_client/src/hooks/domain/auth/use_sign_out.dart';
 import 'package:cheese_client/src/hooks/domain/user/use_update_user.dart';
 import 'package:cheese_client/src/hooks/helper/use_mutation.dart';
+import 'package:cheese_client/src/pages/profile/profile_page_loading.dart';
 import 'package:cheese_client/src/pages/profile/profile_setting_modal.dart';
 import 'package:cheese_client/src/pages/profile/snap_post_card.dart';
 import 'package:cheese_client/src/pages/profile/use_fetch_profile.dart';
@@ -105,7 +106,7 @@ class ProfilePage extends HookConsumerWidget {
           });
     }
 
-    if (snapshot.isLoading || user == null) return const PageLoading();
+    if (snapshot.isLoading || user == null) return const ProfilePageLoading();
 
     return Scaffold(
         appBar: const Header(title: "マイページ"),

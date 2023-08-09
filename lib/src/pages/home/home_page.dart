@@ -2,6 +2,7 @@ import 'package:cheese_client/src/components/ui/common/header.dart';
 import 'package:cheese_client/src/components/ui/common/page_error.dart';
 import 'package:cheese_client/src/components/ui/common/page_loading.dart';
 import 'package:cheese_client/src/hooks/domain/snap_post/use_fetch_snap_posts_by_current_position.dart';
+import 'package:cheese_client/src/pages/home/home_page_loading.dart';
 import 'package:cheese_client/src/pages/home/swipe_snap_post_card.dart';
 import 'package:cheese_client/src/pages/home/use_submit_likes.dart';
 import 'package:cheese_client/src/styles/custom_color.dart';
@@ -42,7 +43,7 @@ class HomePage extends HookConsumerWidget {
       controller.swipeLeft();
     }
 
-    if (snapshot.isLoading) return const PageLoading();
+    if (snapshot.isLoading) return const HomePageLoading();
 
     if (snapshot.hasError) return const PageError();
 

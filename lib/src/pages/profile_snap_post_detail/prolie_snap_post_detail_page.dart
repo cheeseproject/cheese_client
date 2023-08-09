@@ -1,6 +1,7 @@
 import 'package:cheese_client/src/components/ui/common/header.dart';
 import 'package:cheese_client/src/components/ui/common/page_error.dart';
 import 'package:cheese_client/src/components/ui/common/page_loading.dart';
+import 'package:cheese_client/src/components/ui/common/snap_post_detail_page_loading.dart';
 import 'package:cheese_client/src/hooks/domain/snap_post/use_delete_snap_post.dart';
 import 'package:cheese_client/src/hooks/domain/snap_post/use_fetch_snap_post.dart';
 import 'package:cheese_client/src/components/ui/snap_post_detail_card.dart';
@@ -58,7 +59,9 @@ class ProfileSnapPostDetailPage extends HookConsumerWidget {
     }
 
     if (snapshot.hasError) return const PageError();
-    if (snapshot.isLoading || snapPost == null) return const PageLoading();
+    if (snapshot.isLoading || snapPost == null) {
+      return const SnapPostDetailPageLoading();
+    }
 
     return Scaffold(
       backgroundColor: CheeseColor.bgColor,

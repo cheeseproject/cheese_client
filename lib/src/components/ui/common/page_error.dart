@@ -6,8 +6,9 @@ class PageError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-        child: Column(
+    return const Scaffold(
+        body: Center(
+            child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         // Image.asset(
@@ -20,6 +21,6 @@ class PageError extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
         ),
       ],
-    ));
+    )));
   }
 }
