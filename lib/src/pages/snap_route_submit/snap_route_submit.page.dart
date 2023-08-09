@@ -1,6 +1,11 @@
 import 'package:cheese_client/src/components/ui/common/header.dart';
+import 'package:cheese_client/src/entities/snap_post/snap_post.dart';
+import 'package:cheese_client/src/entities/snap_post/tag_options.dart';
 import 'package:cheese_client/src/hooks/domain/snap_route/use_create_snap_route.dart';
+import 'package:cheese_client/src/hooks/helper/use_form_key.dart';
 import 'package:cheese_client/src/hooks/helper/use_mutation.dart';
+import 'package:cheese_client/src/pages/profile/snap_post_card.dart';
+import 'package:cheese_client/src/providers/snap_post_provider.dart';
 import 'package:cheese_client/src/repositories/snap_route/params/snap_route_params.dart';
 import 'package:cheese_client/src/router/page_routes.dart';
 import 'package:cheese_client/src/styles/custom_color.dart';
@@ -26,21 +31,36 @@ class SnapRouteSubmitPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mutation = useCreateSnapRoute(ref);
+    final selectedSnapPosts = ref.watch(snapPostProvider);
     final titleController = useTextEditingController();
+    final formKey = useFormKey();
     Future<void> onBack() async {
       context.pop();
     }
 
     Future<void> onSubmit() async {
+      if (!formKey.currentState!.validate()) return;
+      if (selectedSnapPosts.isEmpty) return;
       final params = CreateSnapRouteParams(
-          title: titleController.text, snapPostIds: dummyId);
+          title: titleController.text,
+          snapPostIds: selectedSnapPosts.map((e) => e.snapPostId).toList());
       mutation.mutate(
           params: params,
           option: MutationOption(onSuccess: (_) {
+            // NOTE: 作成に成功したらグローバルで管理していた状態を全て削除
+            ref.read(snapPostProvider.notifier).clear();
             context.go(PageRoutes.route);
           }, onError: (e) {
             print(e);
           }));
+    }
+
+    void onTapCard(String snapPostId) {
+      context.push('${PageRoutes.snapPostDetail}/$snapPostId');
+    }
+
+    void onTapSelectingFromMap() {
+      context.push(PageRoutes.map);     
     }
 
     return Scaffold(
@@ -69,13 +89,20 @@ class SnapRouteSubmitPage extends HookConsumerWidget {
                     const EdgeInsets.symmetric(vertical: 24.0, horizontal: 8.0),
                 child: Column(
                   children: [
-                    _titleForm(controller: titleController),
+                    Form(
+                      key: formKey,
+                      child: _titleForm(controller: titleController),
+                    ),
                     const SizedBox(height: 24.0),
-                    _postSelectLabels(controller: titleController),
+                    _postSelectLabels(
+                        controller: titleController,
+                        onTapSelectingFromMap: onTapSelectingFromMap),
                     const SizedBox(height: 24.0),
                     const Divider(
                       height: 1,
-                    )
+                    ),
+                    _snapPostCardList(
+                        onTapCard: onTapCard, snapPosts: selectedSnapPosts)
                   ],
                 ))));
   }
@@ -97,7 +124,10 @@ class SnapRouteSubmitPage extends HookConsumerWidget {
     );
   }
 
-  Widget _postSelectLabels({required TextEditingController controller}) {
+  Widget _postSelectLabels({
+    required TextEditingController controller,
+    required VoidCallback onTapSelectingFromMap,
+  }) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
@@ -111,7 +141,11 @@ class SnapRouteSubmitPage extends HookConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _postSelectLabel(text: "マップから選択", imagePath: favoriteIconPath),
+              InkWell(
+                onTap: onTapSelectingFromMap,
+                child: _postSelectLabel(
+                    text: "マップから選択", imagePath: favoriteIconPath),
+              ),
               _postSelectLabel(text: "リストから選択", imagePath: mapIconPath),
             ],
           ),
@@ -145,6 +179,32 @@ class SnapRouteSubmitPage extends HookConsumerWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         )
       ]),
+    );
+  }
+
+  Widget _snapPostCardList(
+      {required List<SnapPost> snapPosts,
+      required void Function(String) onTapCard}) {
+    return GridView.count(
+      // NOTE: GridViewの中でのアイテムのサイズを指定
+      childAspectRatio: 0.7,
+      // NOTE: GridViewの中でのアイテムの数を指定
+      crossAxisCount: 2,
+      shrinkWrap: true,
+
+      // NOTE: GridViewのスクロールを無効化
+      physics: const NeverScrollableScrollPhysics(),
+      children: snapPosts
+          .map((post) => InkWell(
+                onTap: () => onTapCard(post.snapPostId),
+                child: SnapPostCard(
+                  title: post.title,
+                  tags:
+                      post.tags.map((e) => tagOptions.valueToLabel(e)).toList(),
+                  imageUrl: post.postImages.first.imagePath,
+                ),
+              ))
+          .toList(),
     );
   }
 }

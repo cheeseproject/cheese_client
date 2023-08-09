@@ -17,14 +17,6 @@ UseQueryResult<List<SnapPost>> useFetchLikedSnapPosts(WidgetRef ref) {
   return snapshot;
 }
 
-UseQueryResult<List<SnapPost>> useFetchNearbySnapPosts(
-    WidgetRef ref, FetchNearbySnapPostsParams params) {
-  final snapPostRepository = ref.watch(snapPostRepositoryProvider);
-  final snapshot =
-      useQuery(queryFn: () => snapPostRepository.fetchNearby(params));
-  return snapshot;
-}
-
 UseQueryResult<SnapPost> useFetchSnapPost(
     WidgetRef ref, FetchSnapPostParams params) {
   final snapPostRepository = ref.watch(snapPostRepositoryProvider);

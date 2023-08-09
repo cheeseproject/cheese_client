@@ -5,7 +5,7 @@ import 'package:cheese_client/src/hooks/domain/snap_post/use_delete_snap_post.da
 import 'package:cheese_client/src/hooks/domain/snap_post/use_fetch_snap_post.dart';
 import 'package:cheese_client/src/components/ui/snap_post_detail_card.dart';
 import 'package:cheese_client/src/hooks/helper/use_mutation.dart';
-import 'package:cheese_client/src/pages/profile_snap_post_detail/detail_buttom_sheet.dart';
+import 'package:cheese_client/src/pages/profile_snap_post_detail/detail_bottom_sheet.dart';
 import 'package:cheese_client/src/repositories/snap_post/params/snap_post_params.dart';
 import 'package:cheese_client/src/router/page_routes.dart';
 import 'package:cheese_client/src/styles/custom_color.dart';

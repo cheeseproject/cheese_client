@@ -15,7 +15,7 @@ PODS:
   - Firebase/Storage (10.12.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 10.12.0)
-  - firebase_auth (4.7.0):
+  - firebase_auth (4.7.2):
     - Firebase/Auth (~> 10.12.0)
     - Firebase/CoreOnly (~> 10.12.0)
     - firebase_core
@@ -79,6 +79,8 @@ PODS:
   - GoogleUtilities/Reachability (7.11.1):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (3.1.1)
+  - package_info (0.0.1):
+    - FlutterMacOS
   - PromisesObjC (2.2.0)
 
 DEPENDENCIES:
@@ -88,6 +90,7 @@ DEPENDENCIES:
   - firebase_storage (from `Flutter/ephemeral/.symlinks/plugins/firebase_storage/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - geolocator_apple (from `Flutter/ephemeral/.symlinks/plugins/geolocator_apple/macos`)
+  - package_info (from `Flutter/ephemeral/.symlinks/plugins/package_info/macos`)
 
 SPEC REPOS:
   trunk:
@@ -119,11 +122,13 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral
   geolocator_apple:
     :path: Flutter/ephemeral/.symlinks/plugins/geolocator_apple/macos
+  package_info:
+    :path: Flutter/ephemeral/.symlinks/plugins/package_info/macos
 
 SPEC CHECKSUMS:
   cloud_functions: e1953328aad60c8c9210b396b7b24e8e22a9afda
   Firebase: 07150e75d142fb9399f6777fa56a187b17f833a0
-  firebase_auth: a6f73ee5d4a7df8eabcf1a72aa54575f8f768016
+  firebase_auth: a4211e10dc0ab2db54c2783e919927c967ac4a31
   firebase_core: ff59797157ca9adda4440071643761b41fcd03b3
   firebase_storage: d873afdc6a0b5307ffa2bb4a5ca9282cb0b922f3
   FirebaseAppCheckInterop: f95a4feb9089867aff1a4bdc2ce309137e07736a
@@ -140,6 +145,7 @@ SPEC CHECKSUMS:
   geolocator_apple: 72a78ae3f3e4ec0db62117bd93e34523f5011d58
   GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
+  package_info: 6eba2fd8d3371dda2d85c8db6fe97488f24b74b2
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
 
 PODFILE CHECKSUM: 236401fc2c932af29a9fcf0e97baeeb2d750d367

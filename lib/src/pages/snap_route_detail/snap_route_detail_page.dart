@@ -4,6 +4,7 @@ import 'package:cheese_client/src/hooks/domain/snap_route/use_fetch_snap_post.da
 import 'package:cheese_client/src/pages/snap_route_detail/map_page.dart';
 import 'package:cheese_client/src/pages/snap_route_detail/route_detail.dart';
 import 'package:cheese_client/src/pages/snap_route_detail/route_page.dart';
+import 'package:cheese_client/src/pages/snap_route_detail/use_search_route.dart';
 import 'package:cheese_client/src/repositories/snap_route/params/snap_route_params.dart';
 import 'package:cheese_client/src/styles/custom_color.dart';
 import 'package:flutter/material.dart';
@@ -17,17 +18,23 @@ class SnapRouteDetailPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot =
-        useFetchSnapRoute(ref, FetchSnapRouteParams(snapRouteId: snapRouteId));
-    final snapRoute = snapshot.data;
+    final snapshot = useSearchRoute(ref, snapRouteId);
+    final snapRoute = snapshot.data?.snapRoute;
+    final searchRoute = snapshot.data?.searchRoute;
     Future<void> onBack() async {
       context.pop();
     }
 
     void onPressedDetail() {}
 
-    if (snapshot.hasError) return const PageError();
-    if (snapshot.isLoading || snapRoute == null) return const PageLoading();
+    if (snapshot.hasError) {
+      return PageError(
+        message: snapshot.error.toString(),
+      );
+    }
+    if (snapshot.isLoading || snapRoute == null || searchRoute == null) {
+      return const PageLoading();
+    }
 
     return DefaultTabController(
         length: 2,
@@ -40,9 +47,9 @@ class SnapRouteDetailPage extends HookConsumerWidget {
           ),
           body: TabBarView(
             children: [
-              const MapPage(),
+              MapPage(searchRoute: searchRoute),
               RoutePage(
-                snapPosts: snapRoute.snapPosts,
+                searchRoute: searchRoute,
               ),
             ],
           ),

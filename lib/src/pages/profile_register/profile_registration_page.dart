@@ -23,6 +23,7 @@ class ProfileRegistrationPage extends HookConsumerWidget {
     final nameController = useTextEditingController();
     final mutation = useCreateUser(ref);
     final formKey = useMemoized(GlobalKey<FormState>.new);
+    final errorMessage = useState('');
 
     Future<void> refreshUser() async {
       await ref.read(userProvider.notifier).refreshUser();
@@ -34,17 +35,30 @@ class ProfileRegistrationPage extends HookConsumerWidget {
           params:
               CreateUserParams(name: nameController.text, iconPath: dummyImg),
           option: MutationOption(
-            onSuccess: (res) async {
+            onSuccess: (_) async {
               await refreshUser();
               if (context.mounted) context.go(PageRoutes.home);
             },
             onError: (e) async {
-              if (e.toString() == CustomException.alreadyExists().toString()) {
+              final responseMessage = e.toString();
+
+              final isAlreadyExists =
+                  responseMessage == CustomException.alreadyExists().toString();
+              CustomException.alreadyExists().toString();
+              if (isAlreadyExists) {
                 await refreshUser();
                 if (context.mounted) context.go(PageRoutes.home);
                 return;
               }
-              print(e);
+
+              final isUnauthenticated = responseMessage ==
+                  CustomException.unauthenticated().toString();
+              if (isUnauthenticated) {
+                context.go(PageRoutes.home);
+                return;
+              }
+
+              errorMessage.value = responseMessage;
             },
           ));
     }
@@ -80,6 +94,11 @@ class ProfileRegistrationPage extends HookConsumerWidget {
                           ),
                           child: const Text("プロフィール作成",
                               style: TextStyle(fontWeight: FontWeight.bold)))),
+                  const SizedBox(height: 16.0),
+                  Text(
+                    errorMessage.value,
+                    style: TextStyle(color: CheeseColor.error),
+                  )
                 ],
               ),
             )));

@@ -11,6 +11,7 @@ import 'package:cheese_client/src/pages/snap_post_submit/snap_post_submit_page.d
 import 'package:cheese_client/src/pages/snap_route_detail/snap_route_detail_page.dart';
 import 'package:cheese_client/src/pages/snap_route_submit/snap_route_submit.page.dart';
 import 'package:cheese_client/src/providers/auth_provider.dart';
+import 'package:cheese_client/src/providers/page_provider.dart';
 import 'package:cheese_client/src/providers/profile_provider.dart';
 import 'package:cheese_client/src/repositories/auth/auth_repository_provider.dart';
 import 'package:cheese_client/src/router/page_routes.dart';

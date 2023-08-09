@@ -1,13 +1,9 @@
 import 'package:cheese_client/src/components/ui/common/header.dart';
 import 'package:cheese_client/src/components/ui/common/page_error.dart';
 import 'package:cheese_client/src/components/ui/common/page_loading.dart';
-import 'package:cheese_client/src/constants/lat_lng.dart';
-import 'package:cheese_client/src/entities/snap_post/snap_post.dart';
-import 'package:cheese_client/src/hooks/domain/snap_post/use_fetch_snap_post.dart';
-import 'package:cheese_client/src/hooks/domain/snap_post/use_like_snap_post.dart';
-import 'package:cheese_client/src/hooks/helper/use_mutation.dart';
+import 'package:cheese_client/src/hooks/domain/snap_post/use_fetch_snap_posts_by_current_position.dart';
 import 'package:cheese_client/src/pages/home/swipe_snap_post_card.dart';
-import 'package:cheese_client/src/repositories/snap_post/params/snap_post_params.dart';
+import 'package:cheese_client/src/pages/home/use_submit_likes.dart';
 import 'package:cheese_client/src/styles/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:appinio_swiper/appinio_swiper.dart';
@@ -21,34 +17,21 @@ class HomePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AppinioSwiperController controller =
         useMemoized(() => AppinioSwiperController(), []);
-    final snapshot = useFetchNearbySnapPosts(
-        ref,
-        FetchNearbySnapPostsParams(
-            longitude: tokyoLatLng.longitude, latitude: tokyoLatLng.latitude));
+    final snapshot = useFetchSnapPostsByCurrentPosition(ref);
     final snapPosts = snapshot.data ?? [];
-    final likedSnapPosts = useState<List<SnapPost>>([]);
-    final mutation = useLikeSnapPost(ref);
 
-    void like(int index) {
-      print(index);
-      likedSnapPosts.value = [...likedSnapPosts.value, snapPosts[index - 1]];
-    }
+    final likeController = useSubmitLikes(context, ref, snapPosts);
 
     void onSwipe(int index, AppinioSwiperDirection direction) {
-      if (direction == AppinioSwiperDirection.right) return like(index);
+      if (direction == AppinioSwiperDirection.right) {
+        return likeController.like(snapPosts[index - 1]);
+      }
       if (direction == AppinioSwiperDirection.left) return;
       // TODO: 上や下にスワイプした場合の処理をかく
     }
 
     Future<void> onEnd() async {
-      final params = LikeSnapPostParams(
-          snapPostIds: likedSnapPosts.value.map((e) => e.snapPostId).toList());
-      mutation.mutate(
-          params: params,
-          option: MutationOption(
-            onSuccess: (_) => print('success'),
-            onError: (e) => print(e),
-          ));
+      likeController.submitLikes();
     }
 
     void onPressedLike(int index) {

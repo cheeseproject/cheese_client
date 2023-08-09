@@ -25,7 +25,7 @@ class SignInModal extends HookWidget {
     final formKey = useMemoized(GlobalKey<FormState>.new);
 
     return SizedBox(
-        height: 540,
+        height: MediaQuery.of(context).size.height * 0.6,
         child: Container(
           padding: const EdgeInsets.all(32.0),
           decoration: BoxDecoration(

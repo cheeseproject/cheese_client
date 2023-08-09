@@ -1,5 +1,7 @@
 import 'package:cheese_client/firebase_options.dart';
+import 'package:cheese_client/src/constants/config.dart';
 import 'package:cheese_client/src/utils/firebase/firebase_connect_to_emlator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'src/app.dart';
@@ -12,11 +14,11 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // NOTE: ローカル環境でfirebase emulatorを使うための設定
-  // TODO: 環境変数で管理したい。
-  const kDebugMode = true;
+  // NOTE: 環境変数の読み込み
+  await Config.init();
 
-  if (kDebugMode) connectToEmulator();
+  // NOTE: ローカル環境でfirebase emulatorを使うための設定
+  // if (kDebugMode) connectToEmulator();
 
   // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
   runApp(const ProviderScope(child: MyApp()));

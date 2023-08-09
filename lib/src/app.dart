@@ -11,8 +11,8 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final goRouter = ref.watch(goRouterProvider);
-
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       routerConfig: goRouter,
       title: 'Cheese',
       theme: ThemeData(

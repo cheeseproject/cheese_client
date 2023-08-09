@@ -71,7 +71,7 @@ class ProfileSettingModal extends HookConsumerWidget {
     }
 
     return Container(
-      height: MediaQuery.of(context).size.height * 0.8,
+      height: MediaQuery.of(context).size.height * 0.55,
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8.0),
       child: Column(children: [
         _header(onPressedClose: onPressedClose, onSubmit: onSubmitProfile),

@@ -66,4 +66,6 @@ class CustomException implements Exception {
       CustomException(message: 'オブジェクトが見つかりません');
 
   static Exception cancelled() => CustomException(message: 'キャンセルされました');
+
+  static Exception failedRequest() => CustomException(message: 'リクエストに失敗しました');
 }

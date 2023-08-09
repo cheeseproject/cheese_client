@@ -5,14 +5,17 @@ import 'package:cheese_client/src/pages/snap_route_detail/rounded_number.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../entities/search_route/search_route.dart';
+
 class RoutePage extends HookConsumerWidget {
-  final List<SnapPost> snapPosts;
-  const RoutePage({Key? key, required this.snapPosts}) : super(key: key);
+  final SearchRoute searchRoute;
+  const RoutePage({Key? key, required this.searchRoute}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: const EdgeInsets.only(top: 32.0),
-      child: _snapPostPanelList(posts: snapPosts),
+      child:
+          _snapPostPanelList(posts: searchRoute.findSnapPostsByWaypointOrder()),
     );
   }
 

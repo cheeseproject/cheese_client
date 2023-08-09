@@ -148,11 +148,6 @@ class SnapPostSubmitPage extends HookConsumerWidget {
         backgroundColor: Colors.white,
         appBar: Header(
           title: '投稿',
-          leading: IconButton(
-            onPressed: onBack,
-            icon: const Icon(Icons.close),
-            color: Colors.black,
-          ),
           actions: [
             TextButton(
               onPressed: onSubmit,
@@ -164,7 +159,8 @@ class SnapPostSubmitPage extends HookConsumerWidget {
             )
           ],
         ),
-        body: Form(
+        body: SingleChildScrollView(
+            child: Form(
           key: formKey,
           child: Column(
             children: [
@@ -183,7 +179,7 @@ class SnapPostSubmitPage extends HookConsumerWidget {
               _uploadButton(onPressed: onUpload),
             ],
           ),
-        ));
+        )));
   }
 
   Widget _titleInputField(TextEditingController controller) {

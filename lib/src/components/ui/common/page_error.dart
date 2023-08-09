@@ -1,12 +1,12 @@
-import 'package:cheese_client/src/constants/logo_image_path.dart';
 import 'package:flutter/material.dart';
 
 class PageError extends StatelessWidget {
-  const PageError({Key? key}) : super(key: key);
+  final String message;
+  const PageError({Key? key, this.message = 'エラーが発生しました。'}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -14,8 +14,8 @@ class PageError extends StatelessWidget {
         //   logoPath,
         //   width: 150,
         // ),
-        const SizedBox(height: 16.0),
-        const Text(
+        SizedBox(height: 16.0),
+        Text(
           'エラーが発生しました。',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
         ),

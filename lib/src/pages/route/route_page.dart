@@ -4,6 +4,7 @@ import 'package:cheese_client/src/components/ui/common/page_error.dart';
 import 'package:cheese_client/src/components/ui/common/page_loading.dart';
 import 'package:cheese_client/src/entities/snap_route/snap_route.dart';
 import 'package:cheese_client/src/hooks/domain/snap_route/use_fetch_snap_post.dart';
+import 'package:cheese_client/src/providers/snap_post_provider.dart';
 import 'package:cheese_client/src/router/page_routes.dart';
 import 'package:cheese_client/src/styles/custom_color.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,8 @@ class RoutePage extends HookConsumerWidget {
     final snapRoute = snapshot.data ?? [];
 
     void onPressedAdd() {
+      // NOTE: マップ画面で選択されていたものをクリアする
+      ref.read(snapPostProvider.notifier).clear();
       context.push(PageRoutes.routeSubmit);
     }
 
