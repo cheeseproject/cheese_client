@@ -6,7 +6,8 @@ class DottedLine extends StatelessWidget {
   final double dotRadius;
   final double spacing;
 
-  DottedLine({
+  const DottedLine({
+    super.key,
     required this.height,
     this.color = Colors.black,
     this.dotRadius = 2,

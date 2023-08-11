@@ -20,12 +20,15 @@ class HomePage extends HookConsumerWidget {
         useMemoized(() => AppinioSwiperController(), []);
     final snapshot = useFetchSnapPostsByCurrentPosition(ref);
     final snapPosts = snapshot.data ?? [];
+    final sortedRandomSnapPosts = useMemoized(() {
+      return snapPosts..shuffle();
+    }, [snapPosts]);
 
-    final likeController = useSubmitLikes(context, ref, snapPosts);
+    final likeController = useSubmitLikes(context, ref, sortedRandomSnapPosts);
 
     void onSwipe(int index, AppinioSwiperDirection direction) {
       if (direction == AppinioSwiperDirection.right) {
-        return likeController.like(snapPosts[index - 1]);
+        return likeController.like(sortedRandomSnapPosts[index - 1]);
       }
       if (direction == AppinioSwiperDirection.left) return;
       // TODO: 上や下にスワイプした場合の処理をかく
@@ -52,20 +55,22 @@ class HomePage extends HookConsumerWidget {
       appBar: const Header(title: ""),
       body: AppinioSwiper(
         controller: controller,
-        cardsCount: snapPosts.length,
-        backgroundCardsCount: snapPosts.length,
+        cardsCount: sortedRandomSnapPosts.length,
+        backgroundCardsCount: sortedRandomSnapPosts.length,
         padding: const EdgeInsets.all(16.0),
         onSwipe: onSwipe,
         onEnd: onEnd,
         maxAngle: 0,
         cardsBuilder: (BuildContext context, int index) {
-          final images =
-              snapPosts[index].postImages.map((e) => e.imagePath).toList();
+          final images = sortedRandomSnapPosts[index]
+              .postImages
+              .map((e) => e.imagePath)
+              .toList();
           return SwipeSnapPostCard(
               onPressedLike: () => onPressedLike(index),
               onPressedDislike: onPressedDislike,
-              title: snapPosts[index].title,
-              address: snapPosts[index].address,
+              title: sortedRandomSnapPosts[index].title,
+              address: sortedRandomSnapPosts[index].address,
               // firstImage: images.first,
               images: images);
         },

@@ -52,16 +52,19 @@ class MapPage extends HookConsumerWidget {
 
     void onPressedDelete(String snapPostId) {
       ref.read(snapPostProvider.notifier).remove(snapPostId);
+      popupLayerController.hideAllPopups();
     }
 
     void onPressedDetail(String snapPostId) {
       context.push('${PageRoutes.snapPostDetail}/$snapPostId');
+      popupLayerController.hideAllPopups();
     }
 
     void onPressedAdd(String snapPostId) {
       final snapPost =
           displayedSnapPosts.firstWhere((e) => e.snapPostId == snapPostId);
       ref.read(snapPostProvider.notifier).add(snapPost);
+      popupLayerController.hideAllPopups();
     }
 
     void onPressedTab(SnapPostType type) {
@@ -206,27 +209,34 @@ class MapPage extends HookConsumerWidget {
     required VoidCallback onPressedDelete,
     required bool isSelected,
   }) {
+    final actionButtonText = isSelected ? "削除" : "追加";
+    void onPressedAction() {
+      if (isSelected) {
+        onPressedDelete();
+      } else {
+        onPressedAdd();
+      }
+    }
+
     return Container(
-      width: 200,
-      height: 100,
-      color: Colors.white,
-      child: Column(
-        children: [
-          isSelected
-              ? TextButton(
-                  onPressed: onPressedDelete,
-                  child: const Text("ルートから削除"),
-                )
-              : TextButton(
-                  onPressed: onPressedAdd,
-                  child: const Text("ルートに追加"),
-                ),
-          TextButton(
-            onPressed: onPressedDetail,
-            child: const Text("詳細を見る"),
-          )
-        ],
-      ),
-    );
+        width: 144,
+        color: Colors.grey[100],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            OutlinedButton(
+              onPressed: onPressedDetail,
+              style: OutlinedButton.styleFrom(
+                foregroundColor: Colors.black,
+                side: const BorderSide(color: Colors.black),
+              ),
+              child: const Text("詳細"),
+            ),
+            ElevatedButton(
+              onPressed: onPressedAction,
+              child: Text(actionButtonText),
+            )
+          ],
+        ));
   }
 }

@@ -18,13 +18,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 const favoriteIconPath = 'assets/images/favorite.png';
 const mapIconPath = 'assets/images/map.png';
 
-const dummyId = [
-  'b3ab2d33-8917-4382-a7e8-37c2810fd192',
-  '56dc4e7d-8ed7-4d3c-b86d-20c06f9d4070',
-  '523447b9-6d92-4e70-8831-9f91018b7812',
-  'cbab3969-e8ce-453c-abc7-a6f6a6df1ef4',
-];
-
 class SnapRouteSubmitPage extends HookConsumerWidget {
   const SnapRouteSubmitPage({Key? key}) : super(key: key);
 
@@ -60,7 +53,7 @@ class SnapRouteSubmitPage extends HookConsumerWidget {
     }
 
     void onTapSelectingFromMap() {
-      context.push(PageRoutes.map);     
+      context.push(PageRoutes.map);
     }
 
     return Scaffold(

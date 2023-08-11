@@ -7,6 +7,7 @@ class RoundedNumber extends StatelessWidget {
   final TextStyle textStyle;
 
   const RoundedNumber({
+    super.key,
     required this.number,
     this.size = 50,
     this.backgroundColor = Colors.grey,

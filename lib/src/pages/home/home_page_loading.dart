@@ -14,7 +14,7 @@ class HomePageLoading extends StatelessWidget {
           highlightColor: Colors.grey.shade100,
           enabled: true,
           child: SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               child: Container(
                   padding: const EdgeInsets.all(32.0),
                   child: Column(

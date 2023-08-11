@@ -21,7 +21,7 @@ class SearchRouteRepositoryImpl implements SearchRouteRepository {
       required LatLng destination}) async {
     final url =
         toUrl(snapPosts: snapPosts, origin: origin, destination: destination);
-    print(url);
+
     final data = await _search(url);
     final route = data['routes'][0];
 

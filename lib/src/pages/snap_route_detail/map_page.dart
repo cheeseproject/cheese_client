@@ -1,8 +1,6 @@
 import 'package:cheese_client/src/components/ui/snap_post_marker.dart';
-import 'package:cheese_client/src/constants/lat_lng.dart';
 import 'package:cheese_client/src/constants/map_url_template.dart';
 import 'package:cheese_client/src/entities/search_route/search_route.dart';
-import 'package:cheese_client/src/entities/snap_post/snap_post.dart';
 import 'package:cheese_client/src/pages/map/custom_marker.dart';
 
 import 'package:flutter/material.dart';
@@ -17,7 +15,12 @@ const routeIconPath = 'assets/images/route.png';
 
 class MapPage extends HookConsumerWidget {
   final SearchRoute searchRoute;
-  const MapPage({Key? key, required this.searchRoute}) : super(key: key);
+  final LatLng latLng;
+  const MapPage({
+    Key? key,
+    required this.searchRoute,
+    required this.latLng,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,7 +45,7 @@ class MapPage extends HookConsumerWidget {
     return Scaffold(
       body: FlutterMap(
         options: MapOptions(
-          center: dummyLatLng,
+          center: latLng,
           zoom: 16.0,
           onTap: (_, __) => popupLayerController.hideAllPopups(),
         ),

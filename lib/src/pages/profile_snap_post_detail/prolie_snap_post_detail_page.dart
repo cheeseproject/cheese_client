@@ -5,8 +5,10 @@ import 'package:cheese_client/src/components/ui/common/snap_post_detail_page_loa
 import 'package:cheese_client/src/hooks/domain/snap_post/use_delete_snap_post.dart';
 import 'package:cheese_client/src/hooks/domain/snap_post/use_fetch_snap_post.dart';
 import 'package:cheese_client/src/components/ui/snap_post_detail_card.dart';
+import 'package:cheese_client/src/hooks/domain/snap_post/use_update_snap_post.dart';
 import 'package:cheese_client/src/hooks/helper/use_mutation.dart';
 import 'package:cheese_client/src/pages/profile_snap_post_detail/detail_bottom_sheet.dart';
+import 'package:cheese_client/src/pages/profile_snap_post_detail/edit_dialog.dart';
 import 'package:cheese_client/src/repositories/snap_post/params/snap_post_params.dart';
 import 'package:cheese_client/src/router/page_routes.dart';
 import 'package:cheese_client/src/styles/custom_color.dart';
@@ -28,13 +30,40 @@ class ProfileSnapPostDetailPage extends HookConsumerWidget {
     final snapPost = snapshot.data;
 
     final deleteMutation = useDeleteSnapPost(ref);
+    final updateMutation = useUpdateSnapPost(ref);
 
     Future<void> onBack() async {
       context.pop();
     }
 
-    //TODO: 投稿の編集機能を実装する
-    Future<void> onPressedEdit() async {}
+    Future<void> onSubmitSnapPost({required String title, String? comment}) {
+      return updateMutation.mutate(
+          params: UpdateSnapPostParams(
+              snapPostId: snapPostId, title: title, comment: comment),
+          option: MutationOption(onSuccess: (data) {
+            context.pop();
+            context.go(PageRoutes.profile);
+          }, onError: (error) {
+            print('error');
+          }));
+    }
+
+    void onPressedEdit() {
+      context.pop();
+      if (snapPost == null) return;
+      showDialog<void>(
+          context: context,
+          builder: (_) {
+            return EditDialog(
+              onClose: () => context.pop(),
+              title: snapPost.title,
+              comment: snapPost.comment,
+              onSubmit: ({required String title, String? comment}) {
+                onSubmitSnapPost(title: title, comment: comment);
+              },
+            );
+          });
+    }
 
     Future<void> onPressedDelete() async {
       await deleteMutation.mutate(

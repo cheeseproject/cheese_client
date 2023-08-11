@@ -70,10 +70,6 @@ class SnapPostSubmitPage extends HookConsumerWidget {
           }));
     }
 
-    Future<void> onBack() async {
-      context.pop();
-    }
-
     void addFile(FileResult file) {
       uploadedFiles.value = [...uploadedFiles.value, file];
     }
